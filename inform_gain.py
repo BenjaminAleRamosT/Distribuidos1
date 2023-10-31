@@ -1,7 +1,7 @@
 # My Utility : 
 
 import numpy  as np   
-
+import pandas as pd
 # information gain
 def inform_gain(Y,x):
     return inform_estimate(Y) - entropy_xy(x, Y)
@@ -10,9 +10,9 @@ def inform_gain(Y,x):
 
 # estimation of information
 def inform_estimate(y):
-    
-    p = np.unique(y)/len(y)
-
+    y = pd.DataFrame(y)
+    p = y.value_counts()/len(y)
+    # print(p)
     return -sum( p * np.log2(p))
 
 # Entropy of the variables  
@@ -34,9 +34,6 @@ def entropy_xy(x,y):
     I = inform_estimate(d)
     p = sum(np.asarray(d)/N)
     
-    
     return p * I
-
-
 
 #-----------------------------------------------------------------------

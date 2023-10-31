@@ -41,7 +41,13 @@ def load_data(param, dire = 'KDDTrain.txt'):
         data[i], labels = pd.factorize(data[i])
         
     # print(data)
+    # data = data.sample(frac=1)
 
+    idx = np.genfromtxt('idx_samples.csv', dtype=int)
+    
+    #hacer el sampling
+    # data = data.iloc[idx]
+    
     return data
 
 # selecting variables
@@ -50,17 +56,20 @@ def select_vars(X,param):
     Y = X[41]
     X = X.drop(columns=[41])
     
-    idx = np.arange(42)
+    idx = np.arange(41)
     gain = []
-    # for i in range(len(X.columns)):
-    #     gain.append(ig.inform_gain(Y, X[i]))
+    # print(Y)
+    for i in range(len(X.columns)):
+        gain.append(ig.inform_gain(Y, X[i]))
         
-    # union = list(zip(gain, idx))
-    # combinadas_ordenadas = sorted(union, key=lambda x: x[0], reverse=True)[:int(param[1])]
-    # gain, idx = zip(*combinadas_ordenadas)
+    union = list(zip(gain, idx))
+    combinadas_ordenadas = sorted(union, key=lambda x: x[0], reverse=True)[:int(param[1])]
+    gain, idx = zip(*combinadas_ordenadas)
+    idx = np.asarray(idx)
+    # idx = [8, 19, 20, 15, 6, 11, 13, 17, 21, 12, 4, 16, 1, 7, 14, 10, 5, 18, 25, 9, 3, 27, 38, 0, 24, 40, 26, 37, 39, 29]
     
-    idx = [6, 17, 13, 21, 11, 14, 7, 1, 4, 10, 18, 3, 12, 15, 16, 9, 5, 27, 25, 30, 26, 36, 24, 38, 29, 2, 40, 39, 37, 0]
-    X = X[idx] 
+    print(idx)
+    X = X[idx]
     
     V = rsvd.svd_data(X,Y,param)
     
@@ -83,7 +92,8 @@ def save_results(gain,idx,V):
 # Beginning ...
 def main():
     param        = load_config()            
-    X            = load_data(param)   
+    X            = load_data(param)
+    # print(X)
     gain, idx, V = select_vars(X,param)                 
     save_results(gain,idx,V)
        
