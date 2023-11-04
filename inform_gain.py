@@ -20,20 +20,22 @@ def entropy_xy(x,y):
     
     N = len(x)
     B = int(np.floor(np.sqrt(N)))
-    
-
+    y = np.asarray(y)    
+    x = np.asarray(x)
     Xmax ,Xmin = np.max(x), np.min(x)
     l = (Xmax - Xmin)/(B-1) 
     
     d = []
     for i in range(B):
-        d_i = len([a for a in x if (i*l)+Xmin <= a < (i*l)+l+Xmin])
+        d_i = [y[j] for j , a in enumerate(x) if (i*l)+Xmin <= a < (i*l)+l+Xmin]
+        d_i = pd.DataFrame(d_i)
+        d_i = d_i.value_counts()
+        d_i = sum(d_i)/N
         if d_i != 0:
             d.append(d_i)
     d = np.asarray(d)
     I = inform_estimate(d)
-    p = sum(np.asarray(d)/N)
     
-    return p * I
+    return sum(d) * I
 
 #-----------------------------------------------------------------------
