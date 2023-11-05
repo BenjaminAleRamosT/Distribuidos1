@@ -35,7 +35,6 @@ def load_data(param, dire = 'KDDTrain.txt'):
     data[41].replace(c3, param[5], inplace=True)
     
     data[41] = pd.to_numeric(data[41], errors='coerce')
-    data.dropna(subset=[41], inplace=True)
     
     for i in [1,2,3]:
         data[i], labels = pd.factorize(data[i])
@@ -46,8 +45,11 @@ def load_data(param, dire = 'KDDTrain.txt'):
     idx = np.genfromtxt('idx_samples.csv', dtype=int)
     
     #hacer el sampling
-    # data = data.iloc[idx]
+    idx = np.asarray(idx)-1
+    data = data.iloc[idx]
     
+    data.dropna(subset=[41], inplace=True)
+
     return data
 
 # selecting variables
@@ -60,6 +62,7 @@ def select_vars(X,param):
     gain = []
     # print(Y)
     for i in range(len(X.columns)):
+    # for i in [8,19,20,1,2,3,4]:
         gain.append(ig.inform_gain(Y, X[i]))
         
     union = list(zip(gain, idx))

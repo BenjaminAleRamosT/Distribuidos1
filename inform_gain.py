@@ -4,14 +4,15 @@ import numpy  as np
 import pandas as pd
 # information gain
 def inform_gain(Y,x):
-    return inform_estimate(Y) - entropy_xy(x, Y)
     
+    Y = pd.DataFrame(Y)
+    d = Y.value_counts()
+    I = inform_estimate(d,len(Y))
+    return I - entropy_xy(x, Y)
     
-
 # estimation of information
-def inform_estimate(y):
-    y = pd.DataFrame(y)
-    p = y.value_counts()/len(y)
+def inform_estimate(d_i,N):
+    p = d_i / N
     # print(p)
     return -sum( p * np.log2(p))
 
@@ -30,12 +31,13 @@ def entropy_xy(x,y):
         d_i = [y[j] for j , a in enumerate(x) if (i*l)+Xmin <= a < (i*l)+l+Xmin]
         d_i = pd.DataFrame(d_i)
         d_i = d_i.value_counts()
-        d_i = sum(d_i)/N
-        if d_i != 0:
-            d.append(d_i)
+        if Xmax == Xmin:
+            d_i = []
+        if len(d_i) != 0:
+            I = inform_estimate(d_i,N)
+            d_i = sum(d_i)/N
+            d.append(d_i*I)
     d = np.asarray(d)
-    I = inform_estimate(d)
-    
-    return sum(d) * I
+    return sum(d)
 
 #-----------------------------------------------------------------------
