@@ -2,6 +2,10 @@
 Entrega 1 distribuidos 2023
 
 
+Cualquier cosa, duda, consulta, observacion, si cachan que algo del codigo esta malo o se puede mejorar sera bien recibido (**melatonina_** en disc)
+
+
+
 Segun lo investigado creemos que la entropia esta wena, las columnas con una menor entropia entregan una mayor informacion, comprobamos las primeras 3 columnas tienen entropia 0, las siguientes tienen mayor entropia por lo que entregan menos informacion
 
 
