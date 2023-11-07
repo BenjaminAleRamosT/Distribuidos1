@@ -66,18 +66,14 @@ def select_vars(X,param):
     
     idx = np.arange(41)
     gain = []
-    # print(Y)
     for i in range(len(X.columns)):
-    # for i in [8,19,20,1,2,3,4]:
         gain.append(ig.inform_gain(Y, X[i]))
         
     union = list(zip(gain, idx))
     combinadas_ordenadas = sorted(union, key=lambda x: x[0], reverse=True)[:int(param[1])]
     gain, idx = zip(*combinadas_ordenadas)
     idx = np.asarray(idx)
-    # idx = [8, 19, 20, 15, 6, 11, 13, 17, 21, 12, 4, 16, 1, 7, 14, 10, 5, 18, 25, 9, 3, 27, 38, 0, 24, 40, 26, 37, 39, 29]
     
-    print(idx)
     X = X[idx]
     
     V = rsvd.svd_data(X,Y,param)
