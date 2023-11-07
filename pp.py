@@ -50,6 +50,12 @@ def load_data(param, dire = 'KDDTrain.txt'):
     
     data.dropna(subset=[41], inplace=True)
 
+
+    min_values = data.min(axis=0)
+    max_values = data.max(axis=0)
+    data = (data - min_values) / (max_values - min_values + 1.0e-16) 
+    
+
     return data
 
 # selecting variables

@@ -8,7 +8,7 @@ def inform_gain(Y,x):
     Y = pd.DataFrame(Y)
     d = Y.value_counts()
     I = inform_estimate(d,len(Y))
-    return I - entropy_xy(x, Y)
+    return I - entropy_xy(x, Y) 
     
 # estimation of information
 def inform_estimate(d_i,N):
@@ -24,11 +24,17 @@ def entropy_xy(x,y):
     y = np.asarray(y)    
     x = np.asarray(x)
     Xmax ,Xmin = np.max(x), np.min(x)
-    l = (Xmax - Xmin)/(B-1) 
+    l = (Xmax - Xmin)/(B) 
     
     d = []
+    
+    min_ran = (np.arange(B)*l)+Xmin
+    max_ran = min_ran + l
+    #######
     for i in range(B):
-        d_i = [y[j] for j , a in enumerate(x) if (i*l)+Xmin <= a < (i*l)+l+Xmin]
+        print((min_ran[i] <= x) & (x < max_ran[i]))
+        # d_i = np.where((min_ran[i] <= x) & (x < max_ran[i]), y, None)
+        d_i = [y[j][0] for j , a in enumerate(x) if min_ran[i] <= a < max_ran[i]]
         d_i = pd.DataFrame(d_i)
         d_i = d_i.value_counts()
         if Xmax == Xmin:
@@ -37,6 +43,22 @@ def entropy_xy(x,y):
             I = inform_estimate(d_i,N)
             d_i = sum(d_i)/N
             d.append(d_i*I)
+    
+    ######
+    
+    
+    
+    
+    # for i in range(B):
+    #     d_i = [y[j] for j , a in enumerate(x) if (i*l)+Xmin <= a < (i*l)+l+Xmin]
+    #     d_i = pd.DataFrame(d_i)
+    #     d_i = d_i.value_counts()
+    #     if Xmax == Xmin:
+    #         d_i = []
+    #     if len(d_i) != 0:
+    #         I = inform_estimate(d_i,N)
+    #         d_i = sum(d_i)/N
+    #         d.append(d_i*I)
     d = np.asarray(d)
     return sum(d)
 
