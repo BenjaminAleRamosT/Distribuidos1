@@ -1,6 +1,11 @@
 # Distribuidos1
 Entrega 1 distribuidos 2023
 
+**FALTA UN SAMPLING**
+el sampling de los datos de la config, ese que esta en 10000 se me olvido hacerlo,
+
+
+
 
 Cualquier cosa, duda, consulta, observacion, si cachan que algo del codigo esta malo o se puede mejorar sera bien recibido (**melatonina_** en disc)
 
