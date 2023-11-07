@@ -48,6 +48,9 @@ def load_data(param, dire = 'KDDTrain.txt'):
     idx = np.asarray(idx)-1
     data = data.iloc[idx]
     
+    data = data.sample(int(param[0]))
+    
+    
     data.dropna(subset=[41], inplace=True)
 
 
