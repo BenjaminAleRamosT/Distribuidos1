@@ -23,7 +23,6 @@ def svd_data(X,Y,param):
     
     Vt = Vt[:,:int(param[2])]
     
-    print(Vt.shape)
     
     return Vt
 

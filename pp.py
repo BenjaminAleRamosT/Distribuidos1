@@ -74,6 +74,7 @@ def select_vars(X,param):
     gain, idx = zip(*combinadas_ordenadas)
     idx = np.asarray(idx)
     
+    print(idx)
     X = X[idx]
     
     V = rsvd.svd_data(X,Y,param)
@@ -83,13 +84,13 @@ def select_vars(X,param):
 def save_results(gain,idx,V):
     
     gain = pd.DataFrame(gain)
-    gain.to_csv('gain_values.csv', index=False)
+    gain.to_csv('gain_values.csv', index=False, header=None)
     
     idx = pd.DataFrame(idx)
-    idx.to_csv('gain_idx.csv', index=False)
+    idx.to_csv('gain_idx.csv', index=False, header=None)
     
     V = pd.DataFrame(V)
-    V.to_csv('filter_v.csv', index=False)
+    V.to_csv('filter_v.csv', index=False, header=None)
     
     return
 
