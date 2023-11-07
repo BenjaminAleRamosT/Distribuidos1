@@ -19,7 +19,7 @@ def svd_data(X,Y,param):
     X = X - media_columnas
     X = np.asarray(norm_data(X))
     
-    U, S, Vt = np.linalg.svd(X)
+    U, S, Vt = np.linalg.svd(X, full_matrices=False)
     
     Vt = Vt[:,:int(param[2])]
     
